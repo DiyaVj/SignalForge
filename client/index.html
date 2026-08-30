@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SignalForge — live incident room</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h4l2-7 4 14 2-7h6" stroke="#0A0D12" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">SignalForge</div>
+        <div class="brand-sub mono">Live via Agora Conversational AI</div>
+      </div>
+    </div>
+    <span id="connStatus" class="pill mono">disconnected</span>
+  </header>
+
+  <main id="joinScreen" class="join-screen">
+    <div class="join-card">
+      <h1>Join the incident room</h1>
+      <label>Channel<input id="channelInput" value="signalforge-demo" /></label>
+      <label>Your name<input id="nameInput" placeholder="e.g. Jordan" /></label>
+      <label>Your role
+        <select id="roleInput">
+          <option>Incident Commander</option>
+          <option>SRE</option>
+          <option>Engineer</option>
+          <option>Support lead</option>
+          <option>Observer</option>
+        </select>
+      </label>
+      <button id="joinBtn" class="btn primary">Join channel</button>
+      <p class="hint">This calls your backend for a token, joins the Agora RTC channel, and publishes your mic.</p>
+    </div>
+  </main>
+
+  <main id="roomScreen" class="app" style="display:none;">
+    <div class="toolbar">
+      <button id="startAgentBtn" class="btn primary">Start SignalForge</button>
+      <button id="stopAgentBtn" class="btn" disabled>Stop agent</button>
+      <button id="muteBtn" class="btn">Mute mic</button>
+      <span class="spacer"></span>
+      <span id="agentState" class="pill mono">agent: idle</span>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <div class="panel-head"><h2>Live transcript</h2></div>
+        <div id="transcript" class="transcript"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Evidence ledger</h2><span id="ledgerCounts" class="hint mono"></span></div>
+        <div id="ledger" class="ledger-body">
+          <div class="ledger-empty">Nothing logged yet.</div>
+        </div>
+        <div id="contractWrap" class="contract-wrap" style="display:none;">
+          <div id="contractCard" class="contract-card">
+            <div class="contract-head">
+              <span class="contract-title">Decision contract</span>
+              <span id="contractState" class="contract-state mono">PROPOSED</span>
+            </div>
+            <div class="contract-rows">
+              <div><b>Action</b><span id="cAction">—</span></div>
+              <div><b>Requested by</b><span id="cBy">—</span></div>
+              <div><b>Success criteria</b><span id="cSuccess">—</span></div>
+              <div><b>Reversal condition</b><span id="cReversal">—</span></div>
+            </div>
+            <button id="approveBtn" class="btn primary" style="display:none;">Approve as Incident Commander</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
